@@ -1,0 +1,154 @@
+﻿\documentclass[uplatex,10pt,a4paper]{jsarticle}
+\usepackage[top=20mm,hmargin=15mm,bottom=20mm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{minijs}
+
+%\usepackage{xcolor}% for black, blue, brown, cyan,
+%%%%%%%%%%%%%%%%%%%%% darkgray, gray, green, lightgray,
+%%%%%%%%%%%%%%%%%%%%% lime, magenta, olive, orange, pink,
+%%%%%%%%%%%%%%%%%%%%% purple, red, teal, violet, white, yellow.
+\usepackage[dvipdfmx,dvipsnames,usenames]{xcolor}
+\usepackage[dvipdfmx]{graphicx}
+\graphicspath{{assets/}}
+
+\usepackage{float}    %% 図表をその場所に表示させる [H]オプション使用
+\usepackage{url}      %% url{}, href{} の使用
+%\usepackage{asamath}
+\newcommand{\mb}[1]{\mathbf{#1}}
+
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{leftidx} % for super and sub scripts of left side
+\usepackage{ascmac}  % itembox, shadebox, screen enviorments
+\def\presuper#1#2%
+  {\mathop{}%
+   \mathopen{\vphantom{#2}}^{#1}%
+   \kern-\scriptspace%
+   #2}
+% the above was imported from https://tex.stackexchange.com/questions/52076/how-to-make-a-superscript-on-the-upper-left-hand-corner-of-a-letter
+\newcommand{\strong}[1]{\textcolor{blue}{#1}}
+
+\title{dl4s 書式}
+\author{浅川 伸一 {\tt<asakawa\symbol{64}ieee.org>}}
+\date{}
+
+\usepackage[dvipdfmx]{hyperref}
+\hypersetup{
+pdftitle={2019dl4s, Asakawa}
+pdfauthor={Shin Asakawa},
+% pdfstartview={FitH},
+pdffitwindow={true},
+pdfpagemode={UseOutlines},
+% pdfpagelayout={OneColumn},
+colorlinks={true},
+% linkcolor={red},
+%anchorcolor={magenta},
+%citecolor={blue},
+%filecolor={cyan},
+% menucolor={red},
+%urlcolor={magenta},
+% CJKbookmarks={true},
+% bookmarksopen={true},
+% bookmarksopenlevel={\maxdimen},
+bookmarkstype={toc},
+% bookmarksnumbered={true}
+%bookmarksnumbered={false},
+}
+\usepackage{pxjahyper}
+
+\newcommand{\of}[1]{\left(#1\right)}
+\newcommand{\given}[1]{\left|{#1}\right.}
+\newcommand{\Brc}[1]{\left(#1\right)}
+\newcommand{\BRc}[1]{\left[{#1}\right]}
+\newcommand{\BRC}[1]{\left\{{#1}\right\}}
+
+\begin{document}
+\maketitle
+
+\section{数学的表記}
+\begin{itemize}
+\item 整数全体，有理数全体，実数全体，複素数全体を表記する場合，
+$\mb{Z}$, $\mb{Q}$, $\mb{R}$, $\mb{C}$ とするか，
+それとも
+$\mathbb{Z}$, $\mathbb{Q}$, $\mathbb{R}$, $\mathbb{C}$
+のか，
+\item 行列の転置は $\leftidx{^\top}{\mb{X}}{}$ とするか$\mb{X}^{\top}$ とするか
+\end{itemize}
+
+\section{暫定規則}
+
+\begin{itemize}
+\item 文書は \LaTeX を用いて作成する
+\item 引用文献のためのデータベース bibtex を用いる
+\item 句読点: 句点は ``。'' ，読点は``，'' (全角カンマ)
+\item 語尾: ``だ'', ``である'' 調に統一
+\item 専門用語: 日本語に訳せるところは訳す
+\item 外国人名: \strong{カタカナ (原語表記)} とする。ただし中華系の人名は原語を省略しても良い。例: ``チャン は''，``ヒントン (Hinton) は''
+\item 文字コード UTF-8 ただしマッキントッシュで用いられている 正準合成 UTF (canonical composed)とする。Windows はb正準分解 UTF (cannonical decompoable) である。\href{http://unicode.org/reports/tr15/}{ユニコードコンソーシアム参照}
+\item 式，図，表のラベル ``\textbackslash label\{[eq,fig,tab,sec]:イニシアル2文字\_各自で決めるユニークなラベル\textbackslash\}'' とする
+\item 図の解像度: ビットマップ形式ではなくベクタライズ書式を用いる svg, pdf など。カラーで作成し，最終的に出版社の都合でモノクロになっても可読なように配慮する
+\item Python コードは\href{https://colab.research.google.com/notebooks/welcome.ipynb?hl=ja}{Google colaboratory} %jupyter lab jupyter notebook
+  を用いて作成し，\href{https://github.com/ShinAsakawa/2019dl4s}{GitHub}に保存する。
+\href{https://github.com/ShinAsakawa/2019dl4s/blob/master/2019dl4s_first_colaboratory.ipynb}{はじめての Google Colaboratory} を参照のこと
+\end{itemize}
+
+つぎのセクションは文章のサンプルである。
+
+\section{サンプル: ニュートン・ラフソン法 (Newton Raphson method)}
+任意の関数 $f\of{x}$ をテイラー展開して $2$ 次の項までとると以下のようになる。
+\begin{equation}
+f\of{x}=f\of{x_n+\Delta x}\approx f\of{x_n} +\frac{d}{dx}f\of{x_n}\Delta x+\frac{1}{2}\frac{d^2}{dx^2}f\of{x}\Delta x^2,
+\end{equation}
+任意の最適化手法を用いて上式が $0$ となると仮定すると以下を得る。
+
+\begin{eqnarray}
+0&=&\frac{d}{d\Delta x}\Brc{f\of{x_n+\Delta x}+f^{(1)}\of{x_n}\Delta x +\frac{1}{2}f^{(2)}\of{x}\Delta x^2}\\
+&=&f^{(1)}\of{x_n}\Delta x +\frac{1}{2}f^{(2)}\of{x}\Delta x^2\\\
+\Delta x &=& - \frac{f^{(1)}\of{x_n}}{f^{(2)}\of{x}}
+\end{eqnarray}
+
+高次多項式の場合は
+\begin{equation}
+w_{t+1} = w_{n} - \BRc{\mb{H}\of{\mb{w}}}^{-1}\nabla_wf\of{w_n;x,y}
+\end{equation}
+あるいは
+\begin{equation}
+w_{t+1}=w_{t}-\BRc{\mb{H}\of{w}}^{-1}\nabla J_{w}f\of{w_{t};x,y},
+\end{equation}
+である。ここで $J$ はヤコビ行列 (Jacobian)，$H$ はヘッセ行列 (Hessian) である。
+
+\section{浅川によるマニアックな数学表現}
+
+式 $f\of{x}$ を日本人に読ませると ``エフエックス'' と言う輩が多い。だがネイティブスピーカーは
+ほぼ例外なく ``エフオブエックス'' と発音する。このように読んだ方が $x$ の関数 $f$ という意味が
+明確になると思われる。そこで \LaTeX のマクロを定義した。
+
+\verb|\newcommand{\of}[1]{\left(#1\right)}|
+
+このマクロを使うことで，$f\of{x}$ を \verb|f\of{x}| と書くことができる。
+
+同様に，条件付き確率は $P\of{Y\given{X}}$ のように表記される。上と同じく日
+本人にこれを読ませると``ピーワイ...エックス'' などと言って発音すらままならない輩がいる。
+YouTube で数学系のコンテンツを発信している YouTuber を何人か調べてみたが，数学を専門としている(と自称している)教育系 YouTuber でさえ，このように言っているようだ。
+これは結構はずかしいことだと思うのだが，専門家であるならば英語で議論した経験くらい持っていないのだろうかと疑ってしまう。ネイティブスピーカーはこれを ``ピー オブ ワイ ギブン エックス'' と発音する。
+直訳すれば「X が与えられたときの Y の関数 P」であるから条件付き確率であることが明確になるのである。
+そこで浅川は以下のようなマクロを定義し使っている。
+
+\verb,\newcommand{\given}[1]{\left|{#1}\right.},
+
+
+これを使えば，以下のような \LaTeX 文書の可読性を高めることができる。以下は例文である
+
+\begin{quotation}
+識別モデルとは $P\of{\mbox{原因}\given{\mbox{データ}}}$ であり，
+  生成モデルとは $P\of{\mbox{データ}\given{原因}}$ と表記できる。
+  このときベイズの公式を使って $P\of{\mbox{データ}\given{原因}}$ から
+  $P\of{\mbox{データ}\given{原因}}$ を導出することになる。
+\end{quotation}
+
+\end{document}
+
+
